@@ -153,6 +153,10 @@ class Monster {
     /* 자식 div.monster 엘리먼트 생성 */
     this.elChildren = document.createElement("div");
     this.elChildren.className = "monster";
+    /* monster 체력 관리 */
+    this.hpNode = document.createElement("div");
+    this.hpNode.className = "hp";
+    this.hpValue = 1000;
 
     this.init();
   }

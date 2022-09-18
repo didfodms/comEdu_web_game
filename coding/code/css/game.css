@@ -167,7 +167,7 @@
 
 .monster_box .monster {
   height: 100%;
-  background-image: url("../../../lib/images/monster/monster_green_run.png");
+  background-image: url("../../../lib/images/monster/bad_navy_run.png");
   background-size: 2242px 294px;
   animation: monster_run 1s infinite steps(8);
 }
