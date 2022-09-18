@@ -20,6 +20,7 @@
   background-repeat: repeat-x;
   /* 화면의 높이 기준으로 background-image가 그려지도록 */
   background-size: auto 100%;
+  will-change: transform;
 }
 
 .game_app .sky {
@@ -27,11 +28,13 @@
   left: 0;
   bottom: 0;
   z-index: 10;
-  width: 100%;
+  /* sky가 움직이지 않으면 100%, sky가 움직이게 수정했으므로 70000px를 넣어주어야 가로로 반복된다. */
+  width: 70000px;
   height: 100%;
   background-image: url("../../../lib/images/bg_top.png");
   background-repeat: repeat-x;
   background-size: auto 100%;
+  will-change: transform;
 }
 
 @keyframes hero_idle {
@@ -68,6 +71,8 @@
   z-index: 100;
   width: 150px;
   height: 182px;
+  /* 변화될 값은 transform임 */
+  will-change: transform;
 }
 
 .hero_box .hero {
@@ -84,13 +89,14 @@
 }
 
 /* hero에 run 클래스가 추가되었을 때 */
-.hero_box .hero.run {
+.hero_box .hero.run,
+.hero_box .hero.run.attack {
   height: 100%;
   background-image: url("../../../lib/images/pink_run.png");
   /* 원래 크기 3770 458 */
   background-size: 1498px 182px;
   /* animation duration 0.7s 동안 step 10번 무한 이동 */
-  animation: hero_run 0.7s infinite steps(10);
+  animation: hero_run 0.5s infinite steps(10);
 }
 
 /* hero에 attack 클래스가 추가되었을 때 */
@@ -100,7 +106,15 @@
   background-size: 1498px 182px;
   /* animation duration 0.7s 동안 step 10번 무한 이동 */
   /* 0.7s -> 0.2s 수정 */
-  animation: hero_attack 0.7s 1 steps(10);
+  animation: hero_attack 0.2s 1 steps(10);
+}
+
+/* 달리면서 공격하는 이미지 추가하기 */
+.hero_box .hero.run.attack {
+  height: 100%;
+  background-image: url("../../../lib/images/pink_run_attack.png");
+  background-size: 1498px 182px;
+  animation: hero_run 0.5s infinite steps(10);
 }
 
 .hero_bullet {
@@ -113,4 +127,5 @@
   background-image: url("../../../lib/images/carrot_bullet.png");
   background-size: cover;
   background-repeat: no-repeat;
+  will-change: transform;
 }

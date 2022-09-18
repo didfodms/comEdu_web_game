@@ -19,6 +19,8 @@ const bulletComProp = {
 const gameBackground = {
   /* 패럴럭스를 적용할 엘리먼트 설정 gameBox라는 이름으로.. */
   gameBox: document.querySelector(".game"),
+  /* --- 내가 수정 --- */
+  gameSky: document.querySelector(".sky"),
 };
 
 /* 자주 사용하는 것은 공통 처리 */
@@ -47,9 +49,11 @@ const setGameBackground = () => {
   /* hero.movex : 히어로가 이동한 값 */
   /* hero의 위치에서 gameProp.screenWidth / 3만큼을 통째로 이동시켰음 */
   /* Math.min()을 넣어줌으로써 0 ~ gameProp.screenWidth / 3 까지는 배경이 안움직임 */
-  let parallaxValue = Math.min(0, (hero.movex - gameProp.screenWidth / 3) * -1);
+  /* -1을 0.5정도로 수정하면 pink가 배경보다 빨라서 너무 앞으로 감 -> 오히려 좋다면 적용하기 */
+  let parallaxValue = Math.min(0, (hero.movex - gameProp.screenWidth / 4) * -1);
 
   gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
+  gameBackground.gameSky.style.transform = `translateX(${parallaxValue / 6}px)`;
 };
 
 /* window에 event 추가, 관리 */

@@ -3,7 +3,7 @@ class Hero {
   constructor(el) {
     this.el = document.querySelector(el);
     this.movex = 0;
-    this.speed = 12;
+    this.speed = 11;
     this.direction = "right";
   }
   /* keyMotion 메소드, 키를 누를 때 hero의 motion 변경 */
@@ -77,7 +77,8 @@ class Bullet {
   }
   init() {
     this.bulletDirection = hero.direction === "left" ? "left" : "right";
-    this.x = hero.position().left + hero.size().width / 2;
+    this.x = hero.movex + hero.size().width / 2;
+    console.log(hero.movex);
     // 수리검은 transform으로 위치를 잡기 떄문에 빼줘야함
     this.y = hero.position().bottom - hero.size().height / 2;
     this.distance = this.x;
