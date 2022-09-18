@@ -79,9 +79,9 @@ const windowEvent = () => {
 /* 페이지가 로드될때 이미지 로드를 미리 해놓기 위해.. 안해놓으면 끊김 */
 const loadImg = () => {
   const preLoadImgSrc = [
-    "../../../lib/images/ninja_attack.png",
-    "../../../lib/images/ninja_run.png",
-    "../../../lib/images/ninja_run_attack.png",
+    "../../../lib/images/pink_attack.png",
+    "../../../lib/images/pink_run.png",
+    "../../../lib/images/pink_run_attack.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
   preLoadImgSrc.forEach((arr) => {

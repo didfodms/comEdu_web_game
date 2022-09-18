@@ -111,12 +111,34 @@ class Bullet {
   }
   /* 충돌 처리 */
   crashBullet() {
+    /* bullet이 monster 내에 있을때 bullet 삭제 */
+    if (
+      this.position().left > monster.position().left &&
+      this.position().right < monster.position().right
+    ) {
+      for (let i = 0; i < bulletComProp.arr.length; i++) {
+        /* 지금 충돌한 bullet을 찾았다면 그것을 arr배열에서 삭제 */
+        if (bulletComProp.arr[i] === this) {
+          bulletComProp.arr.splice(i, 1);
+          this.el.remove();
+          console.log(bulletComProp.arr);
+        }
+      }
+    }
+
     /* bullet이 화면을 벗어났을 경우 없애기 */
     if (
       this.position().left > gameProp.screenWidth ||
       this.position().right < 0
     ) {
-      this.el.remove();
+      for (let i = 0; i < bulletComProp.arr.length; i++) {
+        /* 지금 충돌한 bullet을 찾았다면 그것을 arr배열에서 삭제 */
+        if (bulletComProp.arr[i] === this) {
+          bulletComProp.arr.splice(i, 1);
+          this.el.remove();
+          console.log(bulletComProp.arr);
+        }
+      }
     }
   }
 }
