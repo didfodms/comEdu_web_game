@@ -28,7 +28,8 @@ gameBackground.gameSky.style.transform = `translateX(${parallaxValue / 6}px)`;
 - 히어로 : 11
 - 무기 : 20
 - 배경 : 히어로 / 4
-- 배경2 : 배경 / 6
+- 배경2 : 배경 / 3 (히어로 / 12)
+- 배경3 : 배경 / 6 (히어로 / 24)
 
 ### 3. 버그 수정
 

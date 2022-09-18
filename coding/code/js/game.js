@@ -20,6 +20,7 @@ const gameBackground = {
   /* 패럴럭스를 적용할 엘리먼트 설정 gameBox라는 이름으로.. */
   gameBox: document.querySelector(".game"),
   /* --- 내가 수정 --- */
+  gameMiddle: document.querySelector(".middle"),
   gameSky: document.querySelector(".sky"),
 };
 
@@ -53,6 +54,9 @@ const setGameBackground = () => {
   let parallaxValue = Math.min(0, (hero.movex - gameProp.screenWidth / 4) * -1);
 
   gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
+  gameBackground.gameMiddle.style.transform = `translateX(${
+    parallaxValue / 3
+  }px)`;
   gameBackground.gameSky.style.transform = `translateX(${parallaxValue / 6}px)`;
 };
 
@@ -77,6 +81,7 @@ const loadImg = () => {
   const preLoadImgSrc = [
     "../../../lib/images/ninja_attack.png",
     "../../../lib/images/ninja_run.png",
+    "../../../lib/images/ninja_run_attack.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
   preLoadImgSrc.forEach((arr) => {

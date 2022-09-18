@@ -17,10 +17,24 @@
   /* 임의로 크게 설정 */
   width: 70000px;
   height: 100%;
-  background-image: url("../../../lib/images/bg_bottom.png");
+  background-image: url("../../../lib/images/bg_ground.png");
   /* 가로로 반복되게 만들기 */
   background-repeat: repeat-x;
   /* 화면의 높이 기준으로 background-image가 그려지도록 */
+  background-size: auto 100%;
+  will-change: transform;
+}
+
+/* 수정 시작 */
+.game_app .middle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 70000px;
+  height: 100%;
+  background-image: url("../../../lib/images/bg_middle.png");
+  background-repeat: repeat-x;
   background-size: auto 100%;
   will-change: transform;
 }
@@ -33,7 +47,7 @@
   /* sky가 움직이지 않으면 100%, sky가 움직이게 수정했으므로 70000px를 넣어주어야 가로로 반복된다. */
   width: 70000px;
   height: 100%;
-  background-image: url("../../../lib/images/bg_top.png");
+  background-image: url("../../../lib/images/bg_sky.png");
   background-repeat: repeat-x;
   background-size: auto 100%;
   will-change: transform;
