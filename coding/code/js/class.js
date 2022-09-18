@@ -13,7 +13,7 @@ class Hero {
       this.el.classList.add("run");
       this.el.classList.add("flip");
 
-      this.movex = this.movex - this.speed;
+      this.movex = this.movex < 0 ? 0 : this.movex - this.speed;
     } else if (key.keyDown["right"]) {
       this.direction = "right";
       this.el.classList.add("run");
@@ -77,8 +77,10 @@ class Bullet {
   }
   init() {
     this.bulletDirection = hero.direction === "left" ? "left" : "right";
-    this.x = hero.movex + hero.size().width / 2;
-    console.log(hero.movex);
+    this.x =
+      this.bulletDirection === "right"
+        ? hero.movex + hero.size().width / 2
+        : hero.movex - hero.size().width / 2;
     // 수리검은 transform으로 위치를 잡기 떄문에 빼줘야함
     this.y = hero.position().bottom - hero.size().height / 2;
     this.distance = this.x;
@@ -116,5 +118,35 @@ class Bullet {
     ) {
       this.el.remove();
     }
+  }
+}
+
+class Monster {
+  constructor() {
+    /* div.game을 부모 엘리먼트로 설정 */
+    this.parentNode = document.querySelector(".game");
+    /* div.monster_box 엘리먼트 생성 */
+    this.el = document.createElement("div");
+    this.el.className = "monster_box";
+    /* 자식 div.monster 엘리먼트 생성 */
+    this.elChildren = document.createElement("div");
+    this.elChildren.className = "monster";
+
+    this.init();
+  }
+  init() {
+    /* el 엘리먼트에 elChildren 엘리먼트를 자식으로 추가 */
+    this.el.appendChild(this.elChildren);
+    /* parentNode 엘리먼트에 el 엘리먼트를 자식으로 추가 */
+    this.parentNode.appendChild(this.el);
+  }
+  position() {
+    /* position Object를 리턴 */
+    return {
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHeight - this.el.getBoundingClientRect().top,
+      bottom: gameProp.screenHeight - this.el.getBoundingClientRect().bottom,
+    };
   }
 }
