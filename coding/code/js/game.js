@@ -82,6 +82,8 @@ const loadImg = () => {
     "../../../lib/images/pink_attack.png",
     "../../../lib/images/pink_run.png",
     "../../../lib/images/pink_run_attack.png",
+    "../../../lib/images/monster/bad_navy_run.png",
+    "../../../lib/images/carrot_crash.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
   preLoadImgSrc.forEach((arr) => {

@@ -81,7 +81,7 @@ class Bullet {
       this.bulletDirection === "right"
         ? hero.movex + hero.size().width / 2
         : hero.movex - hero.size().width / 2;
-    // 수리검은 transform으로 위치를 잡기 떄문에 빼줘야함
+    // 수리검은 transform으로 위치를 잡기 때문에 빼줘야함
     this.y = hero.position().bottom - hero.size().height / 2;
     this.distance = this.x;
     this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
@@ -116,6 +116,9 @@ class Bullet {
       this.position().left > monster.position().left &&
       this.position().right < monster.position().right
     ) {
+      /* 2022-09-18 crash bullet effect 수정 */
+      this.crashBulletEffect();
+      /* 끝 */
       for (let i = 0; i < bulletComProp.arr.length; i++) {
         /* 지금 충돌한 bullet을 찾았다면 그것을 arr배열에서 삭제 */
         if (bulletComProp.arr[i] === this) {
@@ -140,6 +143,14 @@ class Bullet {
         }
       }
     }
+  }
+  /* 2022-09-18 crashBulletEffect 처리 */
+  crashBulletEffect() {
+    this.elCrashBox = document.querySelector(".hero_bullet_crash_box");
+    this.elCrashEffect = document.createElement("div");
+    this.elCrashEffect.className = "hero_bullet_crash";
+
+    this.elCrashBox.appendChild(this.elCrashEffect);
   }
 }
 

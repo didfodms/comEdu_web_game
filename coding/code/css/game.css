@@ -146,6 +146,35 @@
   will-change: transform;
 }
 
+/* 2022-09-18 carrot crash 편집 */
+@keyframes carrot_crash {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -320px;
+  }
+}
+
+.hero_bullet_crash_box {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 80px;
+  height: 150px;
+  /* 변화될 값은 transform임 */
+  will-change: transform;
+}
+
+.hero_bullet_crash_box .hero_bullet_crash {
+  height: 100%;
+  background-image: url("../../../lib/images/carrot_crash.png");
+  background-size: 320px 150px;
+  animation: carrot_crash 0.3s 1 steps(4);
+}
+/* 편집 끝 */
+
 @keyframes monster_run {
   from {
     background-position-x: 0px;
@@ -167,7 +196,7 @@
 
 .monster_box .monster {
   height: 100%;
-  background-image: url("../../../lib/images/monster/bad_navy_run.png");
+  background-image: url("../../../lib/images/monster/monster_devil_run_2.png");
   background-size: 2242px 294px;
   animation: monster_run 1s infinite steps(8);
 }
