@@ -284,10 +284,15 @@ class Hero {
       ".game_info .hero_state .hero_img .level_box"
     );
     levelState.classList.add("active");
+    const hpState = document.querySelector(
+      ".game_info .hero_state .state_box .hp span"
+    );
+    hpState.classList.add("active");
 
     setTimeout(() => {
       levelGuide.classList.remove("active");
       levelState.classList.remove("active");
+      hpState.classList.remove("active");
     }, 1000);
     this.updateExp(this.exp);
     this.heroUpgrade();
@@ -351,10 +356,6 @@ class Bullet {
         this.position().left > allMonsterComProp.arr[j].position().left &&
         this.position().right < allMonsterComProp.arr[j].position().right
       ) {
-        /* 2022-09-18 crash bullet effect 수정 */
-        this.crashBulletEffect();
-        /* 끝 */
-
         for (let i = 0; i < bulletComProp.arr.length; i++) {
           /* 지금 충돌한 bullet을 찾았다면 그것을 arr배열에서 삭제 */
           if (bulletComProp.arr[i] === this) {
@@ -382,13 +383,6 @@ class Bullet {
         }
       }
     }
-  } /* 2022-09-18 crashBulletEffect 처리 */
-  crashBulletEffect() {
-    this.elCrashBox = document.querySelector(".hero_bullet_crash_box");
-    this.elCrashEffect = document.createElement("div");
-    this.elCrashEffect.className = "hero_bullet_crash";
-
-    this.elCrashBox.appendChild(this.elCrashEffect);
   }
   damageView(monster) {
     this.parentNode = document.querySelector(".game_app");

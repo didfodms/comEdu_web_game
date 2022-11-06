@@ -121,6 +121,15 @@
   border-radius: 10px;
 }
 
+.game_info .hero_state .state_box .hp span.active {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(24, 203, 24);
+  transition: width 0.3s linear;
+  border-radius: 10px;
+}
+
 .game_info .hero_state .state_box .exp {
   width: 100%;
   height: 15px;
@@ -412,38 +421,6 @@
   background-repeat: no-repeat;
   will-change: transform;
 }
-
-/* 2022-09-18 carrot crash 편집 */
-@keyframes carrot_crash {
-  from {
-    background-position-x: 0px;
-  }
-  to {
-    background-position-x: -320px;
-  }
-}
-
-/*
-.hero_bullet_crash_box {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 100;
-  width: 80px;
-  height: 150px;
-  // 변화될 값은 transform임
-  will-change: transform;
-}
-
-.hero_bullet_crash_box .hero_bullet_crash {
-  height: 100%;
-  background-image: url("../../../lib/images/carrot_crash.png");
-  background-size: 320px 150px;
-  animation: carrot_crash 0.2s 1 steps(4);
-}
-*/
-
-/* 편집 끝 */
 
 @keyframes monster_run {
   from {
