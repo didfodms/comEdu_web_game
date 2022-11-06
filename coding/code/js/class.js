@@ -1,24 +1,27 @@
 /* npc 클래스 만들기 */
 class Npc {
-  constructor() {
+  constructor(property) {
+    this.property = property;
     this.parentNode = document.querySelector(".game");
     this.el = document.createElement("div");
     this.el.className = "npc_box";
     this.npcCrash = false;
     this.talkOn = false;
     this.modal = document.querySelector(".quest_modal");
+    this.questStart = false;
+    this.questEnd = false;
 
     this.init();
   }
   init() {
     let npcTalk = "";
     npcTalk += '<div class="talk_box">';
-    npcTalk +=
-      "<p>큰일이야..<br>사람들이 좀비로 변하고 있어..<br><span>대화 Enter</span></p>";
+    npcTalk += this.property.idleMessage;
     npcTalk += "</div>";
     npcTalk += '<div class="npc"></div>';
 
     this.el.innerHTML = npcTalk;
+    this.el.style.left = this.property.positionX + "px";
     this.parentNode.appendChild(this.el);
   }
   position() {
@@ -43,24 +46,12 @@ class Npc {
   talk() {
     if (!this.talkOn && this.npcCrash) {
       this.talkOn = true;
-      this.quest();
+      this.property.quest();
       this.modal.classList.add("active");
     } else if (this.talkOn) {
       this.talkOn = false;
       this.modal.classList.remove("active");
     }
-  }
-  quest() {
-    let text = "";
-    text += '<figure class="npc_img">';
-    text += '<img src="../../lib/images/npc.png" alt="" />';
-    text += "</figure>";
-    text +=
-      "<p>마을에 몬스터가 출몰해 주민들을 좀비로 만들고 있어.. 몬스터를사냥해 주민을 구하고 <span>레벨을 5이상</span>으로 만들어 힘을 증명한다면 좀비왕을 물리칠 수 있도록 내 힘을 빌려줄게!!</p>";
-    const modalInner = document.querySelector(
-      ".quest_modal .inner_box .quest_talk"
-    );
-    modalInner.innerHTML = text;
   }
 }
 
@@ -186,7 +177,7 @@ class Hero {
         if (this.direction === "right") {
           this.movex = this.movex + this.slideSpeed;
         } else {
-          this.movex = this.movex - this.slideSpeed;
+          this.movex = this.movex <= 0 ? 0 : this.movex - this.slideSpeed;
         }
 
         if (this.slideTime > this.slideMaxTime) {
@@ -267,8 +258,10 @@ class Hero {
     this.realDamage =
       this.attackDamage - Math.round(Math.random() * this.attackDamage * 0.1);
   }
-  heroUpgrade() {
-    this.attackDamage += 5000;
+  heroUpgrade(upDamage) {
+    // 넘어온 값이 있다면 upDamage 넣고, 없다면 5000 넣기
+    let damage = upDamage ?? 5000;
+    this.attackDamage += damage;
   }
   updateExp(exp) {
     this.exp += exp;
@@ -287,8 +280,15 @@ class Hero {
     document.querySelector(".level_box strong").innerText = this.level;
     const levelGuide = document.querySelector(".hero_box .level_up");
     levelGuide.classList.add("active");
+    const levelState = document.querySelector(
+      ".game_info .hero_state .hero_img .level_box"
+    );
+    levelState.classList.add("active");
 
-    setTimeout(() => levelGuide.classList.remove("active"), 1000);
+    setTimeout(() => {
+      levelGuide.classList.remove("active");
+      levelState.classList.remove("active");
+    }, 1000);
     this.updateExp(this.exp);
     this.heroUpgrade();
     this.plusHp(this.defaultHpValue);
@@ -382,6 +382,13 @@ class Bullet {
         }
       }
     }
+  } /* 2022-09-18 crashBulletEffect 처리 */
+  crashBulletEffect() {
+    this.elCrashBox = document.querySelector(".hero_bullet_crash_box");
+    this.elCrashEffect = document.createElement("div");
+    this.elCrashEffect.className = "hero_bullet_crash";
+
+    this.elCrashBox.appendChild(this.elCrashEffect);
   }
   damageView(monster) {
     this.parentNode = document.querySelector(".game_app");
@@ -396,14 +403,6 @@ class Bullet {
 
     this.textDamageNode.style.transform = `translate(${damagex}px, ${-damagey}px)`;
     setTimeout(() => this.textDamageNode.remove(), 500);
-  }
-  /* 2022-09-18 crashBulletEffect 처리 */
-  crashBulletEffect() {
-    this.elCrashBox = document.querySelector(".hero_bullet_crash_box");
-    this.elCrashEffect = document.createElement("div");
-    this.elCrashEffect.className = "hero_bullet_crash";
-
-    this.elCrashBox.appendChild(this.elCrashEffect);
   }
 }
 

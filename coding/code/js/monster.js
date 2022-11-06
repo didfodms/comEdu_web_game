@@ -57,3 +57,12 @@ const pinkMonBoss = {
   score: 30000,
   exp: 30000,
 };
+
+const zombieKing = {
+  name: "zombie_king",
+  hpValue: 15200000,
+  speed: 3,
+  crashDamage: 4000,
+  score: 3000000,
+  exp: 500000,
+};

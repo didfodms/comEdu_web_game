@@ -12,6 +12,11 @@ const key = {
   },
 };
 
+/* npc object 생성 */
+const npcComProp = {
+  arr: [],
+};
+
 /* monster object 생성 */
 const allMonsterComProp = {
   arr: [],
@@ -38,9 +43,10 @@ const stageInfo = {
     { defaultMon: greenMon, bossMon: greenMonBoss },
     { defaultMon: yellowMon, bossMon: yellowMonBoss },
     { defaultMon: pinkMon, bossMon: pinkMonBoss },
+    { defaultMon: pinkMon, bossMon: zombieKing },
   ],
   // 나중에 텀 길게..
-  callPosition: [1000, 5000, 9000],
+  callPosition: [1000, 5000, 9000, 12000],
 };
 
 /* 자주 사용하는 것은 공통 처리 */
@@ -57,7 +63,10 @@ const renderGame = () => {
   hero.keyMotion();
   setGameBackground();
 
-  npcOne.crash();
+  /* 수정해야함!! */
+  for (let i = 0; i < npcComProp.arr.length; i++) {
+    npcComProp.arr[i].crash();
+  }
 
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
@@ -99,7 +108,9 @@ const windowEvent = () => {
   window.addEventListener("keydown", (e) => {
     if (!gameProp.gameOver) key.keyDown[key.keyValue[e.which]] = true;
     if (key.keyDown["enter"]) {
-      npcOne.talk();
+      for (let i = 0; i < npcComProp.arr.length; i++) {
+        npcComProp.arr[i].talk();
+      }
     }
   });
 
@@ -123,6 +134,7 @@ const loadImg = () => {
     "../../../lib/images/monster/monster_devil_run_2.png",
     "../../../lib/images/monster/monster_devil_run_3.png",
     "../../../lib/images/carrot_crash.png",
+    "../../../lib/images/pink_slide.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
   preLoadImgSrc.forEach((arr) => {
@@ -132,14 +144,15 @@ const loadImg = () => {
 };
 
 let hero;
-let npcOne;
 
 /* program 시작에 필요한 function 또는 method 호출 */
 const init = () => {
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
   stageInfo.stage = new Stage();
-  npcOne = new Npc();
+  npcComProp.arr.push(new Npc(levelQuest));
+  npcComProp.arr.push(new Npc(levelQuestTwo));
+
   /* Monster instance 생성 (몬스터 위치, 몬스터 체력) */
   /*   allMonsterComProp.arr[0] = new Monster(
     greenMonBoss,
