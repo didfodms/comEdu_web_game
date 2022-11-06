@@ -7,7 +7,14 @@ const key = {
     38: "up",
     40: "down",
     88: "attack",
+    67: "slide",
+    13: "enter",
   },
+};
+
+/* monster object 생성 */
+const allMonsterComProp = {
+  arr: [],
 };
 
 /* bullet object 생성 */
@@ -24,10 +31,23 @@ const gameBackground = {
   gameSky: document.querySelector(".sky"),
 };
 
+const stageInfo = {
+  stage: [],
+  totalScore: 0,
+  monster: [
+    { defaultMon: greenMon, bossMon: greenMonBoss },
+    { defaultMon: yellowMon, bossMon: yellowMonBoss },
+    { defaultMon: pinkMon, bossMon: pinkMonBoss },
+  ],
+  // 나중에 텀 길게..
+  callPosition: [1000, 5000, 9000],
+};
+
 /* 자주 사용하는 것은 공통 처리 */
 const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
+  gameOver: false,
 };
 
 const renderGame = () => {
@@ -37,11 +57,25 @@ const renderGame = () => {
   hero.keyMotion();
   setGameBackground();
 
+  npcOne.crash();
+
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
   });
+  allMonsterComProp.arr.forEach((arr, i) => {
+    arr.moveMonster();
+  });
+
+  stageInfo.stage.clearCheck();
   /* 재귀로 초당 60프레임을 돌며 renderGame함수가 무한 반복 */
   window.requestAnimationFrame(renderGame);
+};
+
+const endGame = () => {
+  gameProp.gameOver = true;
+  key.keyDown.left = false;
+  key.keyDown.right = false;
+  document.querySelector(".game_over").classList.add("active");
 };
 
 /* hero가 이동한 만큼 background-image도 이동 */
@@ -63,7 +97,10 @@ const setGameBackground = () => {
 /* window에 event 추가, 관리 */
 const windowEvent = () => {
   window.addEventListener("keydown", (e) => {
-    key.keyDown[key.keyValue[e.which]] = true;
+    if (!gameProp.gameOver) key.keyDown[key.keyValue[e.which]] = true;
+    if (key.keyDown["enter"]) {
+      npcOne.talk();
+    }
   });
 
   window.addEventListener("keyup", (e) => {
@@ -82,7 +119,9 @@ const loadImg = () => {
     "../../../lib/images/pink_attack.png",
     "../../../lib/images/pink_run.png",
     "../../../lib/images/pink_run_attack.png",
-    "../../../lib/images/monster/bad_navy_run.png",
+    "../../../lib/images/monster/monster_devil_run_1.png",
+    "../../../lib/images/monster/monster_devil_run_2.png",
+    "../../../lib/images/monster/monster_devil_run_3.png",
     "../../../lib/images/carrot_crash.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
@@ -93,13 +132,29 @@ const loadImg = () => {
 };
 
 let hero;
-let monster;
+let npcOne;
 
 /* program 시작에 필요한 function 또는 method 호출 */
 const init = () => {
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
-  monster = new Monster();
+  stageInfo.stage = new Stage();
+  npcOne = new Npc();
+  /* Monster instance 생성 (몬스터 위치, 몬스터 체력) */
+  /*   allMonsterComProp.arr[0] = new Monster(
+    greenMonBoss,
+    gameProp.screenWidth + 700
+  );
+  allMonsterComProp.arr[1] = new Monster(
+    yellowMonBoss,
+    gameProp.screenWidth + 1400
+  );
+  allMonsterComProp.arr[2] = new Monster(
+    pinkMonBoss,
+    gameProp.screenWidth + 2100
+  ); */
+
+  //allMonsterComProp.arr[1] = new Monster(1500, 5555);
   /* 이미지가 미리 로드되어 깜빡임 없이 처리 가능 */
   loadImg();
   windowEvent();
