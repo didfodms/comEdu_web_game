@@ -150,7 +150,18 @@ const init = () => {
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
   stageInfo.stage = new Stage();
-  npcComProp.arr.push(new Npc(levelQuest));
+  // 0 ~ 19까지 중복 없는 랜덤 값을 questionComProp.submittedIndex[]에 넣어줌
+  for (let i = 0; i < 5; i++) {
+    let randomIndex = Math.round(Math.random() * questionComProp.arr.length);
+    if (questionComProp.submittedIndex.indexOf(randomIndex) === -1) {
+      questionComProp.submittedIndex.push(randomIndex);
+    } else {
+      i--;
+    }
+  }
+  console.log(questionComProp.submittedIndex);
+
+  npcComProp.arr.push(new Npc(levelQuest1));
   npcComProp.arr.push(new Npc(levelQuestTwo));
 
   /* Monster instance 생성 (몬스터 위치, 몬스터 체력) */
