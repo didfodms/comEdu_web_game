@@ -38,15 +38,16 @@ const gameBackground = {
 
 const stageInfo = {
   stage: [],
+  totalTime: 0,
   totalScore: 0,
   monster: [
     { defaultMon: greenMon, bossMon: greenMonBoss },
     { defaultMon: yellowMon, bossMon: yellowMonBoss },
     { defaultMon: pinkMon, bossMon: pinkMonBoss },
-    { defaultMon: pinkMon, bossMon: zombieKing },
+    { defaultMon: devil4, bossMon: zombieKing },
   ],
   // 나중에 텀 길게..
-  callPosition: [1000, 5000, 9000, 12000],
+  callPosition: [2000, 8000, 14000, 22000],
 };
 
 /* 자주 사용하는 것은 공통 처리 */
@@ -82,6 +83,16 @@ const renderGame = () => {
   }
   /* 재귀로 초당 60프레임을 돌며 renderGame함수가 무한 반복 */
   window.requestAnimationFrame(renderGame);
+};
+
+/* timer check 0.01초 단위로.. */
+const checkTimer = () => {
+  const timerBox = document.querySelector(".timer_box");
+
+  setInterval(() => {
+    stageInfo.totalTime += 0.01;
+    timerBox.innerText = stageInfo.totalTime.toFixed(2);
+  }, 10);
 };
 
 const endGame = () => {
@@ -137,6 +148,8 @@ const loadImg = () => {
     "../../../lib/images/monster/monster_devil_run_1.png",
     "../../../lib/images/monster/monster_devil_run_2.png",
     "../../../lib/images/monster/monster_devil_run_3.png",
+    "../../../lib/images/monster/monster_devil_run_4.png",
+    "../../../lib/images/monster/monster_devil_run_boss.png",
     "../../../lib/images/carrot_crash.png",
     "../../../lib/images/pink_slide.png",
   ];
@@ -166,8 +179,10 @@ const init = () => {
   }
   console.log(questionComProp.submittedIndex);
 
-  npcComProp.arr.push(new Npc(levelQuest1));
-  npcComProp.arr.push(new Npc(levelQuestTwo));
+  npcComProp.arr.push(new Npc(quest1));
+  npcComProp.arr.push(new Npc(quest2));
+  npcComProp.arr.push(new Npc(quest3));
+  npcComProp.arr.push(new Npc(clear));
 
   /* Monster instance 생성 (몬스터 위치, 몬스터 체력) */
   /*   allMonsterComProp.arr[0] = new Monster(
@@ -188,6 +203,7 @@ const init = () => {
   loadImg();
   windowEvent();
   renderGame();
+  checkTimer();
 };
 
 /* 모든 요소가 로드 된 후 윈도우를 실행하여야 함 */

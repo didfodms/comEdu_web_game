@@ -31,6 +31,15 @@ const pinkMon = {
   exp: 3000,
 };
 
+const devil4 = {
+  name: "devil_4",
+  hpValue: 200000,
+  speed: 4,
+  crashDamage: 300,
+  score: 5000,
+  exp: 5000,
+};
+
 const greenMonBoss = {
   name: "green_mon_boss",
   hpValue: 800000,

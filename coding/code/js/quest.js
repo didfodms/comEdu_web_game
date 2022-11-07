@@ -54,8 +54,8 @@ const questionComProp = {
     },
     {
       question: "다음 중 제주대학교 컴퓨터교육과 교수님이 아닌 사람은?",
-      option: ["파이썬", "C", "JAVA", "LUNA"],
-      answer: "LUNA",
+      option: ["김한일", "김성백", "노은철", "박찬정"],
+      answer: "노은철",
     },
     {
       question: "다음 중 블록체인 기술과 연관이 없는 것은?",
@@ -100,47 +100,64 @@ const questionComProp = {
   ],
 };
 
-const levelQuest1 = {
+const quest1 = {
   //원래 4500
-  positionX: 500,
-  idleMessage:
-    "<p>큰일이야..<br>사람들이 좀비로 변하고 있어..<br><span>대화 Enter</span></p>",
+  number: 1,
+  positionX: 5000,
+  idleMessage: "<p>큰일이야..<br>바이러스가..<br><span>대화 Enter</span></p>",
   quest: () => {
     const index = questionComProp.submittedIndex[0];
     const question = questionComProp.arr[index];
+    const answer = question.answer;
+    // 정답이 correct?한지 안한지
+    let correct = false;
+
     const message = {
       // 처음
-      start: `[문제 1]<br />${question.question}<br />
-      <input type="radio" name="q1" /> ${question.option[0]}<br>
-      <input type="radio" name="q1" /> ${question.option[1]}<br>
-      <input type="radio" name="q1" /> ${question.option[2]}<br>
-      <input type="radio" name="q1" /> ${question.option[3]}<br>`,
+      start:
+        "컴교 친구들이 위험해<br>문제 맞추면 내 힘을 빌려줄게~<br>컴교를 구해줘!!",
       // 퀘스트 진행 중
-      ing: "이런 아직 레벨을 달성하지 못했구나..",
+      ing: `[문제 ${quest1.number}]<br />${question.question}<br />
+      <input type="radio" name="q1" value="0"/> ${question.option[0]}<br>
+      <input type="radio" name="q1" value="1"/> ${question.option[1]}<br>
+      <input type="radio" name="q1" value="2"/> ${question.option[2]}<br>
+      <input type="radio" name="q1" value="3"/> ${question.option[3]}<br>`,
       // 성공
-      suc: "레벨을 달성했구나! 힘을 줄게!",
+      suc: "정답이야! 힘을 줄게!",
       // 이미 퀘스트 완료했는데 다시 말 검
-      end: "고마워! 행운을 빌어!",
+      fail: "오답이야! 힘을 줄 수 없어 ㅠㅠ",
     };
 
     let messageState = "";
 
+    // 초기 메세지
     if (!npcComProp.arr[0].questStart) {
       messageState = message.start;
       npcComProp.arr[0].questStart = true;
-    } else if (npcComProp.arr[0].questStart && !npcComProp.arr[0].questEnd) {
+    } // 문제를 냈지만 답을 하지 않았을 때,
+    else if (npcComProp.arr[0].questStart && !npcComProp.arr[0].questAnswer) {
       messageState = message.ing;
-    } else if (npcComProp.arr[0].questStart && !npcComProp.arr[0].questEnd) {
+    } // 답이 맞았을 경우
+    else if (
+      npcComProp.arr[0].questStart &&
+      npcComProp.arr[0].questAnswer &&
+      npcComProp.arr[0].questCorrect
+    ) {
       messageState = message.suc;
       npcComProp.arr[0].questEnd = true;
       hero.heroUpgrade(50000);
-    } else if (npcComProp.arr[0].questStart && npcComProp.arr[0].questEnd) {
-      messageState = message.end;
+    } // 답이 틀렸을 경우
+    else if (
+      npcComProp.arr[0].questStart &&
+      npcComProp.arr[0].questAnswer &&
+      !npcComProp.arr[0].questCorrect
+    ) {
+      messageState = message.fail;
     }
 
     let text = "";
     text += '<figure class="npc_img">';
-    text += '<img src="../../lib/images/npc_profile.png" alt="" />';
+    text += '<img src="../../lib/images/npc_profile_1.png" alt="" />';
     text += "</figure>";
     text += "<p>";
     text += messageState;
@@ -152,16 +169,160 @@ const levelQuest1 = {
   },
 };
 
-const levelQuestTwo = {
-  positionX: 8500,
-  idleMessage: "<p>곧 좀비왕이 부활하려고해..<span>대화 Enter</span></p>",
+const quest2 = {
+  // 8500
+  number: 2,
+  positionX: 12000,
+  idleMessage:
+    "<p>곧 리눅스실에도 모두..<br>바이러스가 퍼질거야..<span>대화 Enter</span></p>",
   quest: () => {
-    const level = 7;
+    const index = questionComProp.submittedIndex[1];
+    const question = questionComProp.arr[index];
+    const answer = question.answer;
+    // 정답이 correct?한지 안한지
+    let correct = false;
+
     const message = {
       // 처음
-      start: `마을에 몬스터가 출몰해 주민들을 좀비로 만들고 있어.. 몬스터를사냥해 주민을 구하고 <span>레벨을 ${level}이상</span>으로 만들어 힘을 증명한다면 좀비왕을 물리칠 수 있도록 내 힘을 빌려줄게!!`,
+      start:
+        "바이러스가 너무 강해..<br>문제 맞추면 힘을 줄게~<br>컴교를 구해줘!!",
       // 퀘스트 진행 중
-      ing: "이런 아직 레벨을 달성하지 못했구나..",
+      ing: `[문제 ${quest2.number}]<br />${question.question}<br />
+      <input type="radio" name="q1" value="0"/> ${question.option[0]}<br>
+      <input type="radio" name="q1" value="1"/> ${question.option[1]}<br>
+      <input type="radio" name="q1" value="2"/> ${question.option[2]}<br>
+      <input type="radio" name="q1" value="3"/> ${question.option[3]}<br>`,
+      // 성공
+      suc: "정답이야! 힘을 줄게!",
+      // 이미 퀘스트 완료했는데 다시 말 검
+      fail: "오답이야! 힘을 줄 수 없어 ㅠㅠ",
+    };
+
+    let messageState = "";
+
+    // 초기 메세지
+    if (!npcComProp.arr[1].questStart) {
+      messageState = message.start;
+      npcComProp.arr[1].questStart = true;
+    } // 문제를 냈지만 답을 하지 않았을 때,
+    else if (npcComProp.arr[1].questStart && !npcComProp.arr[1].questAnswer) {
+      messageState = message.ing;
+    } // 답이 맞았을 경우
+    else if (
+      npcComProp.arr[1].questStart &&
+      npcComProp.arr[1].questAnswer &&
+      npcComProp.arr[1].questCorrect
+    ) {
+      messageState = message.suc;
+      npcComProp.arr[1].questEnd = true;
+      hero.heroUpgrade(50000);
+    } // 답이 틀렸을 경우
+    else if (
+      npcComProp.arr[1].questStart &&
+      npcComProp.arr[1].questAnswer &&
+      !npcComProp.arr[1].questCorrect
+    ) {
+      messageState = message.fail;
+    }
+
+    let text = "";
+    text += '<figure class="npc_img">';
+    text += '<img src="../../lib/images/npc_profile_2.png" alt="" />';
+    text += "</figure>";
+    text += "<p>";
+    text += messageState;
+    text += "</p>";
+    const modalInner = document.querySelector(
+      ".quest_modal .inner_box .quest_talk"
+    );
+    modalInner.innerHTML = text;
+  },
+};
+
+const quest3 = {
+  // 11500
+  number: 3,
+  positionX: 20000,
+  idleMessage:
+    "<p>조금만 힘내..<br>마지막 보스만 물리치면..<span>대화 Enter</span></p>",
+  quest: () => {
+    const index = questionComProp.submittedIndex[2];
+    const question = questionComProp.arr[index];
+    const answer = question.answer;
+    // 정답이 correct?한지 안한지
+    let correct = false;
+
+    const message = {
+      // 처음
+      start:
+        "거의 다 물리쳤지만..<br>가장 악랄한 바이러스가 남았어..!<br>컴교를 구해줘!!",
+      // 퀘스트 진행 중
+      ing: `[문제 ${quest3.number}]<br />${question.question}<br />
+      <input type="radio" name="q1" value="0"/> ${question.option[0]}<br>
+      <input type="radio" name="q1" value="1"/> ${question.option[1]}<br>
+      <input type="radio" name="q1" value="2"/> ${question.option[2]}<br>
+      <input type="radio" name="q1" value="3"/> ${question.option[3]}<br>`,
+      // 성공
+      suc: "정답이야! 힘을 줄게!",
+      // 이미 퀘스트 완료했는데 다시 말 검
+      fail: "오답이야! 힘을 줄 수 없어 ㅠㅠ",
+    };
+
+    let messageState = "";
+
+    // 초기 메세지
+    if (!npcComProp.arr[2].questStart) {
+      messageState = message.start;
+      npcComProp.arr[2].questStart = true;
+    } // 문제를 냈지만 답을 하지 않았을 때,
+    else if (npcComProp.arr[2].questStart && !npcComProp.arr[2].questAnswer) {
+      messageState = message.ing;
+    } // 답이 맞았을 경우
+    else if (
+      npcComProp.arr[2].questStart &&
+      npcComProp.arr[2].questAnswer &&
+      npcComProp.arr[2].questCorrect
+    ) {
+      messageState = message.suc;
+      npcComProp.arr[2].questEnd = true;
+      hero.heroUpgrade(50000);
+    } // 답이 틀렸을 경우
+    else if (
+      npcComProp.arr[2].questStart &&
+      npcComProp.arr[2].questAnswer &&
+      !npcComProp.arr[2].questCorrect
+    ) {
+      messageState = message.fail;
+    }
+
+    let text = "";
+    text += '<figure class="npc_img">';
+    text += '<img src="../../lib/images/npc_profile_3.png" alt="" />';
+    text += "</figure>";
+    text += "<p>";
+    text += messageState;
+    text += "</p>";
+    const modalInner = document.querySelector(
+      ".quest_modal .inner_box .quest_talk"
+    );
+    modalInner.innerHTML = text;
+  },
+};
+
+// clear시 체크 방법 : allMonsterComProp.arr.length가 0일 경우.... -> 체크가 제대로 안됨
+//
+const clear = {
+  number: 4,
+  positionX: 25000,
+  idleMessage: "<p><span>대화 Enter</span></p>",
+  quest: () => {
+    const message = {
+      // 처음
+      start: "몬스터를 모두 물리쳐줘!!",
+      // 퀘스트 진행 중
+      ing: `고마워! 덕분에 컴교는 이제 안전해!<br><br>점수 ${
+        stageInfo.totalScore
+      }<br>시간 ${stageInfo.totalTime.toFixed(2)}`,
       // 성공
       suc: "레벨을 달성했구나! 힘을 줄게!",
       // 이미 퀘스트 완료했는데 다시 말 검
@@ -170,30 +331,34 @@ const levelQuestTwo = {
 
     let messageState = "";
 
-    if (!npcComProp.arr[1].questStart) {
+    // 초기 메세지
+    if (!npcComProp.arr[3].questStart) {
       messageState = message.start;
-      npcComProp.arr[1].questStart = true;
-    } else if (
-      npcComProp.arr[1].questStart &&
-      !npcComProp.arr[1].questEnd &&
-      hero.level < level
-    ) {
+      npcComProp.arr[3].questStart = true;
+    } // 문제를 냈지만 답을 하지 않았을 때,
+    else if (npcComProp.arr[3].questStart && !npcComProp.arr[3].questAnswer) {
       messageState = message.ing;
-    } else if (
-      npcComProp.arr[1].questStart &&
-      !npcComProp.arr[1].questEnd &&
-      hero.level >= level
+    } // 답이 맞았을 경우
+    else if (
+      npcComProp.arr[3].questStart &&
+      npcComProp.arr[3].questAnswer &&
+      npcComProp.arr[3].questCorrect
     ) {
       messageState = message.suc;
-      npcComProp.arr[1].questEnd = true;
-      hero.heroUpgrade(70000);
-    } else if (npcComProp.arr[1].questStart && npcComProp.arr[1].questEnd) {
-      messageState = message.end;
+      npcComProp.arr[3].questEnd = true;
+      hero.heroUpgrade(50000);
+    } // 답이 틀렸을 경우
+    else if (
+      npcComProp.arr[3].questStart &&
+      npcComProp.arr[3].questAnswer &&
+      !npcComProp.arr[3].questCorrect
+    ) {
+      messageState = message.fail;
     }
 
     let text = "";
     text += '<figure class="npc_img">';
-    text += '<img src="../../lib/images/npc_profile.png" alt="" />';
+    text += '<img src="../../lib/images/npc_profile_4.png" alt="" />';
     text += "</figure>";
     text += "<p>";
     text += messageState;
@@ -204,3 +369,56 @@ const levelQuestTwo = {
     modalInner.innerHTML = text;
   },
 };
+
+/* const levelQuestTwo = {
+    positionX: 8500,
+    idleMessage: "<p>곧 이상준이 부활하려고해..<span>대화 Enter</span></p>",
+    quest: () => {
+      const level = 7;
+      const message = {
+        // 처음
+        start: `마을에 몬스터가 출몰해 주민들을 좀비로 만들고 있어.. 몬스터를사냥해 주민을 구하고 <span>레벨을 ${level}이상</span>으로 만들어 힘을 증명한다면 좀비왕을 물리칠 수 있도록 내 힘을 빌려줄게!!`,
+        // 퀘스트 진행 중
+        ing: "이런 아직 레벨을 달성하지 못했구나..",
+        // 성공
+        suc: "레벨을 달성했구나! 힘을 줄게!",
+        // 이미 퀘스트 완료했는데 다시 말 검
+        end: "고마워! 행운을 빌어!",
+      };
+  
+      let messageState = "";
+  
+      if (!npcComProp.arr[1].questStart) {
+        messageState = message.start;
+        npcComProp.arr[1].questStart = true;
+      } else if (
+        npcComProp.arr[1].questStart &&
+        !npcComProp.arr[1].questEnd &&
+        hero.level < level
+      ) {
+        messageState = message.ing;
+      } else if (
+        npcComProp.arr[1].questStart &&
+        !npcComProp.arr[1].questEnd &&
+        hero.level >= level
+      ) {
+        messageState = message.suc;
+        npcComProp.arr[1].questEnd = true;
+        hero.heroUpgrade(70000);
+      } else if (npcComProp.arr[1].questStart && npcComProp.arr[1].questEnd) {
+        messageState = message.end;
+      }
+  
+      let text = "";
+      text += '<figure class="npc_img">';
+      text += '<img src="../../lib/images/npc_profile.png" alt="" />';
+      text += "</figure>";
+      text += "<p>";
+      text += messageState;
+      text += "</p>";
+      const modalInner = document.querySelector(
+        ".quest_modal .inner_box .quest_talk"
+      );
+      modalInner.innerHTML = text;
+    },
+  }; */

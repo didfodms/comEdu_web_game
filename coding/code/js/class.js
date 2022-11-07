@@ -8,8 +8,14 @@ class Npc {
     this.npcCrash = false;
     this.talkOn = false;
     this.modal = document.querySelector(".quest_modal");
+    // quest의 상태 관리
     this.questStart = false;
-    this.questEnd = false;
+    // quest에 대답했다면
+    this.questAnswer = false;
+    // quest를 맞았다면 true, 틀렸다면 false
+    // 비교 방법 : end && correct
+    this.questCorrect = false;
+    this.npcNumber = property.number;
 
     this.init();
   }
@@ -22,6 +28,7 @@ class Npc {
 
     this.el.innerHTML = npcTalk;
     this.el.style.left = this.property.positionX + "px";
+    this.el.querySelector(".npc").classList.add(`npc${this.npcNumber}`);
     this.parentNode.appendChild(this.el);
   }
   position() {
@@ -102,7 +109,29 @@ class Stage {
     stageInfo.callPosition.forEach((arr) => {
       // 히어로 이동 값이 스테이지의 마지막 몬스터 첫 소환위치를 넘고 + 몬스터를 다 사냥했을 경우
       if (hero.movex >= arr && allMonsterComProp.arr.length === 0) {
-        this.stageGuide("곧 몬스터가 몰려옵니다!");
+        let stageName = "";
+        switch (this.level) {
+          case 0: {
+            stageName = "컴실을 구해라!";
+            break;
+          }
+          case 1: {
+            stageName = "리눅스실을 구해라!";
+            break;
+          }
+          case 2: {
+            stageName = "디비실을 구해라!";
+            break;
+          }
+          case 3: {
+            stageName = "임베디드를 구해라!";
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+        this.stageGuide(`STAGE${this.level + 1} ${stageName}`);
         stageInfo.callPosition.shift();
 
         setTimeout(() => {
@@ -132,7 +161,7 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.direction = "right";
-    this.attackDamage = 10000;
+    this.attackDamage = 1110000;
     /* 히어로 체력 백분율로 */
     this.hpProgress = 0;
     this.hpValue = 100000;
