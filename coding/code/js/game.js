@@ -54,28 +54,32 @@ const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
   gameOver: false,
+  gamePause: false,
 };
 
 const renderGame = () => {
   /* 키를 눌렀을 때만 동작하는 게 아니라 */
   /* 무한으로 호출되다가 사용자가 키를 누르면 */
   /* 키에 맞는 동작을 하므로 딜레이가 없음 */
-  hero.keyMotion();
-  setGameBackground();
+  // 게임이 멈추지 않았을 경우
+  if (!gameProp.gamePause) {
+    hero.keyMotion();
+    setGameBackground();
 
-  /* 수정해야함!! */
-  for (let i = 0; i < npcComProp.arr.length; i++) {
-    npcComProp.arr[i].crash();
+    /* 수정해야함!! */
+    for (let i = 0; i < npcComProp.arr.length; i++) {
+      npcComProp.arr[i].crash();
+    }
+
+    bulletComProp.arr.forEach((arr, i) => {
+      arr.moveBullet();
+    });
+    allMonsterComProp.arr.forEach((arr, i) => {
+      arr.moveMonster();
+    });
+
+    stageInfo.stage.clearCheck();
   }
-
-  bulletComProp.arr.forEach((arr, i) => {
-    arr.moveBullet();
-  });
-  allMonsterComProp.arr.forEach((arr, i) => {
-    arr.moveMonster();
-  });
-
-  stageInfo.stage.clearCheck();
   /* 재귀로 초당 60프레임을 돌며 renderGame함수가 무한 반복 */
   window.requestAnimationFrame(renderGame);
 };
@@ -150,6 +154,7 @@ const init = () => {
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
   stageInfo.stage = new Stage();
+
   // 0 ~ 19까지 중복 없는 랜덤 값을 questionComProp.submittedIndex[]에 넣어줌
   for (let i = 0; i < 5; i++) {
     let randomIndex = Math.round(Math.random() * questionComProp.arr.length);

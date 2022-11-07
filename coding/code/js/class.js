@@ -45,10 +45,14 @@ class Npc {
   }
   talk() {
     if (!this.talkOn && this.npcCrash) {
+      gameProp.gamePause = true;
+
       this.talkOn = true;
       this.property.quest();
       this.modal.classList.add("active");
     } else if (this.talkOn) {
+      gameProp.gamePause = false;
+
       this.talkOn = false;
       this.modal.classList.remove("active");
     }
