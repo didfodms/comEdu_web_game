@@ -175,9 +175,6 @@ let hero;
 
 /* program 시작에 필요한 function 또는 method 호출 */
 const init = () => {
-  /* 이미지가 미리 로드되어 깜빡임 없이 처리 가능 */
-  loadImg();
-
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
   stageInfo.stage = new Stage();
@@ -213,7 +210,8 @@ const init = () => {
   ); */
 
   //allMonsterComProp.arr[1] = new Monster(1500, 5555);
-
+  /* 이미지가 미리 로드되어 깜빡임 없이 처리 가능 */
+  loadImg();
   windowEvent();
   renderGame();
   checkTimer();

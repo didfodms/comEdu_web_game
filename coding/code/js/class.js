@@ -160,9 +160,9 @@ class Hero {
   constructor(el) {
     this.el = document.querySelector(el);
     this.movex = 0;
-    this.speed = 11;
+    this.speed = 10;
     this.direction = "right";
-    this.attackDamage = 10000;
+    this.attackDamage = 10001;
     /* 히어로 체력 백분율로 */
     this.hpProgress = 0;
     this.hpValue = 100000;
