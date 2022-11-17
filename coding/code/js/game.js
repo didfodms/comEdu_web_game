@@ -146,13 +146,23 @@ const loadImg = () => {
     "../../../lib/images/pink_attack.png",
     "../../../lib/images/pink_run.png",
     "../../../lib/images/pink_run_attack.png",
+    "../../../lib/images/pink_slide.png",
+    "../../../lib/images/pink_crash.png",
+    "../../../lib/images/pink_dead.png",
+    "../../../lib/images/pink_profile.png",
     "../../../lib/images/monster/monster_devil_run_1.png",
     "../../../lib/images/monster/monster_devil_run_2.png",
     "../../../lib/images/monster/monster_devil_run_3.png",
     "../../../lib/images/monster/monster_devil_run_4.png",
     "../../../lib/images/monster/monster_devil_run_boss.png",
-    "../../../lib/images/carrot_crash.png",
-    "../../../lib/images/pink_slide.png",
+    "../../../lib/images/npc_idle_1.png",
+    "../../../lib/images/npc_idle_2.png",
+    "../../../lib/images/npc_idle_3.png",
+    "../../../lib/images/npc_idle_4.png",
+    "../../../lib/images/npc_profile_1.png",
+    "../../../lib/images/npc_profile_2.png",
+    "../../../lib/images/npc_profile_3.png",
+    "../../../lib/images/npc_profile_4.png",
   ];
   /* 이미지 배열의 길이만큼 반복되는 반복문을 만듬 */
   preLoadImgSrc.forEach((arr) => {
@@ -165,6 +175,9 @@ let hero;
 
 /* program 시작에 필요한 function 또는 method 호출 */
 const init = () => {
+  /* 이미지가 미리 로드되어 깜빡임 없이 처리 가능 */
+  loadImg();
+
   /* class.js에서 생성한 Hero 클래스의 instance 생성 */
   hero = new Hero(".hero");
   stageInfo.stage = new Stage();
@@ -200,8 +213,7 @@ const init = () => {
   ); */
 
   //allMonsterComProp.arr[1] = new Monster(1500, 5555);
-  /* 이미지가 미리 로드되어 깜빡임 없이 처리 가능 */
-  loadImg();
+
   windowEvent();
   renderGame();
   checkTimer();

@@ -162,7 +162,7 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.direction = "right";
-    this.attackDamage = 11110000;
+    this.attackDamage = 10000;
     /* 히어로 체력 백분율로 */
     this.hpProgress = 0;
     this.hpValue = 100000;
