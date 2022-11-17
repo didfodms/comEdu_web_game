@@ -81,6 +81,7 @@ const renderGame = () => {
 
     stageInfo.stage.clearCheck();
   }
+
   /* 재귀로 초당 60프레임을 돌며 renderGame함수가 무한 반복 */
   window.requestAnimationFrame(renderGame);
 };

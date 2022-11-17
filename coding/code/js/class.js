@@ -12,9 +12,10 @@ class Npc {
     this.questStart = false;
     // quest에 대답했다면
     this.questAnswer = false;
-    // quest를 맞았다면 true, 틀렸다면 false
-    // 비교 방법 : end && correct
-    this.questCorrect = false;
+    // quest를 맞았다면 success, 틀렸다면 fail
+    this.questSuccess = false;
+    this.questFail = false;
+
     this.npcNumber = property.number;
 
     this.init();
@@ -161,7 +162,7 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.direction = "right";
-    this.attackDamage = 1110000;
+    this.attackDamage = 11110000;
     /* 히어로 체력 백분율로 */
     this.hpProgress = 0;
     this.hpValue = 100000;
@@ -301,7 +302,6 @@ class Hero {
     this.expProgress = (this.exp / this.maxExp) * 100;
     document.querySelector(".hero_state .exp span").style.width =
       this.expProgress + "%";
-    console.log("current exp : " + this.expProgress);
     if (this.exp >= this.maxExp) {
       this.levelUp();
     }

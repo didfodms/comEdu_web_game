@@ -109,8 +109,10 @@ const quest1 = {
     const index = questionComProp.submittedIndex[0];
     const question = questionComProp.arr[index];
     const answer = question.answer;
+
     // 정답이 correct?한지 안한지
-    let correct = false;
+    let checkAnswerIndex = -1;
+    let checkAnswer = "";
 
     const message = {
       // 처음
@@ -135,23 +137,33 @@ const quest1 = {
       messageState = message.start;
       npcComProp.arr[0].questStart = true;
     } // 문제를 냈지만 답을 하지 않았을 때,
-    else if (npcComProp.arr[0].questStart && !npcComProp.arr[0].questAnswer) {
+    else if (!npcComProp.arr[0].questAnswer) {
       messageState = message.ing;
-    } // 답이 맞았을 경우
-    else if (
-      npcComProp.arr[0].questStart &&
-      npcComProp.arr[0].questAnswer &&
-      npcComProp.arr[0].questCorrect
-    ) {
+      npcComProp.arr[0].questAnswer = $("input:radio[name=q1]").is(":checked");
+
+      // 답을 했다면..
+      if (npcComProp.arr[0].questAnswer) {
+        checkAnswerIndex = $("input:radio[name=q1]:checked").val();
+        checkAnswer = question.option[checkAnswerIndex];
+        // 답이 맞았을 경우
+        if (checkAnswer === question.answer) {
+          messageState = message.suc;
+          npcComProp.arr[0].questSuccess = true;
+          hero.heroUpgrade(50000);
+        } // 답이 틀렸을 경우
+        else {
+          messageState = message.fail;
+          npcComProp.arr[0].questFail = true;
+        }
+      }
+    }
+    // 답이 맞았을 경우
+    else if (npcComProp.arr[0].questSuccess) {
       messageState = message.suc;
       npcComProp.arr[0].questEnd = true;
       hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
-    else if (
-      npcComProp.arr[0].questStart &&
-      npcComProp.arr[0].questAnswer &&
-      !npcComProp.arr[0].questCorrect
-    ) {
+    else if (npcComProp.arr[0].questFail) {
       messageState = message.fail;
     }
 
@@ -205,23 +217,33 @@ const quest2 = {
       messageState = message.start;
       npcComProp.arr[1].questStart = true;
     } // 문제를 냈지만 답을 하지 않았을 때,
-    else if (npcComProp.arr[1].questStart && !npcComProp.arr[1].questAnswer) {
+    else if (!npcComProp.arr[1].questAnswer) {
       messageState = message.ing;
-    } // 답이 맞았을 경우
-    else if (
-      npcComProp.arr[1].questStart &&
-      npcComProp.arr[1].questAnswer &&
-      npcComProp.arr[1].questCorrect
-    ) {
+      npcComProp.arr[1].questAnswer = $("input:radio[name=q1]").is(":checked");
+
+      // 답을 했다면..
+      if (npcComProp.arr[1].questAnswer) {
+        checkAnswerIndex = $("input:radio[name=q1]:checked").val();
+        checkAnswer = question.option[checkAnswerIndex];
+        // 답이 맞았을 경우
+        if (checkAnswer === question.answer) {
+          messageState = message.suc;
+          npcComProp.arr[1].questSuccess = true;
+          hero.heroUpgrade(50000);
+        } // 답이 틀렸을 경우
+        else {
+          messageState = message.fail;
+          npcComProp.arr[1].questFail = true;
+        }
+      }
+    }
+    // 답이 맞았을 경우
+    else if (npcComProp.arr[1].questSuccess) {
       messageState = message.suc;
       npcComProp.arr[1].questEnd = true;
       hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
-    else if (
-      npcComProp.arr[1].questStart &&
-      npcComProp.arr[1].questAnswer &&
-      !npcComProp.arr[1].questCorrect
-    ) {
+    else if (npcComProp.arr[1].questFail) {
       messageState = message.fail;
     }
 
@@ -275,23 +297,33 @@ const quest3 = {
       messageState = message.start;
       npcComProp.arr[2].questStart = true;
     } // 문제를 냈지만 답을 하지 않았을 때,
-    else if (npcComProp.arr[2].questStart && !npcComProp.arr[2].questAnswer) {
+    else if (!npcComProp.arr[2].questAnswer) {
       messageState = message.ing;
-    } // 답이 맞았을 경우
-    else if (
-      npcComProp.arr[2].questStart &&
-      npcComProp.arr[2].questAnswer &&
-      npcComProp.arr[2].questCorrect
-    ) {
+      npcComProp.arr[2].questAnswer = $("input:radio[name=q1]").is(":checked");
+
+      // 답을 했다면..
+      if (npcComProp.arr[2].questAnswer) {
+        checkAnswerIndex = $("input:radio[name=q1]:checked").val();
+        checkAnswer = question.option[checkAnswerIndex];
+        // 답이 맞았을 경우
+        if (checkAnswer === question.answer) {
+          messageState = message.suc;
+          npcComProp.arr[2].questSuccess = true;
+          hero.heroUpgrade(50000);
+        } // 답이 틀렸을 경우
+        else {
+          messageState = message.fail;
+          npcComProp.arr[2].questFail = true;
+        }
+      }
+    }
+    // 답이 맞았을 경우
+    else if (npcComProp.arr[2].questSuccess) {
       messageState = message.suc;
-      npcComProp.arr[2].questEnd = true;
+      npcComProp.arr[0].questEnd = true;
       hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
-    else if (
-      npcComProp.arr[2].questStart &&
-      npcComProp.arr[2].questAnswer &&
-      !npcComProp.arr[2].questCorrect
-    ) {
+    else if (npcComProp.arr[2].questFail) {
       messageState = message.fail;
     }
 
@@ -313,48 +345,32 @@ const quest3 = {
 //
 const clear = {
   number: 4,
-  positionX: 25000,
+  positionX: 30000,
   idleMessage: "<p><span>대화 Enter</span></p>",
   quest: () => {
     const message = {
       // 처음
       start: "몬스터를 모두 물리쳐줘!!",
       // 퀘스트 진행 중
-      ing: `고마워! 덕분에 컴교는 이제 안전해!<br><br>점수 ${
+      fin: `고마워! 덕분에 컴교는 이제 안전해!<br><br>점수 ${
         stageInfo.totalScore
       }<br>시간 ${stageInfo.totalTime.toFixed(2)}`,
-      // 성공
-      suc: "레벨을 달성했구나! 힘을 줄게!",
-      // 이미 퀘스트 완료했는데 다시 말 검
-      end: "고마워! 행운을 빌어!",
     };
 
     let messageState = "";
-
     // 초기 메세지
-    if (!npcComProp.arr[3].questStart) {
+    if (!npcComProp.arr[3].questSuccess) {
       messageState = message.start;
       npcComProp.arr[3].questStart = true;
+
+      if (allMonsterComProp.arr.length === 0) {
+        messageState = message.fin;
+        npcComProp.arr[3].questSuccess = true;
+      }
     } // 문제를 냈지만 답을 하지 않았을 때,
-    else if (npcComProp.arr[3].questStart && !npcComProp.arr[3].questAnswer) {
-      messageState = message.ing;
+    else if (npcComProp.arr[3].questSuccess) {
+      messageState = message.fin;
     } // 답이 맞았을 경우
-    else if (
-      npcComProp.arr[3].questStart &&
-      npcComProp.arr[3].questAnswer &&
-      npcComProp.arr[3].questCorrect
-    ) {
-      messageState = message.suc;
-      npcComProp.arr[3].questEnd = true;
-      hero.heroUpgrade(50000);
-    } // 답이 틀렸을 경우
-    else if (
-      npcComProp.arr[3].questStart &&
-      npcComProp.arr[3].questAnswer &&
-      !npcComProp.arr[3].questCorrect
-    ) {
-      messageState = message.fail;
-    }
 
     let text = "";
     text += '<figure class="npc_img">';
@@ -369,56 +385,3 @@ const clear = {
     modalInner.innerHTML = text;
   },
 };
-
-/* const levelQuestTwo = {
-    positionX: 8500,
-    idleMessage: "<p>곧 이상준이 부활하려고해..<span>대화 Enter</span></p>",
-    quest: () => {
-      const level = 7;
-      const message = {
-        // 처음
-        start: `마을에 몬스터가 출몰해 주민들을 좀비로 만들고 있어.. 몬스터를사냥해 주민을 구하고 <span>레벨을 ${level}이상</span>으로 만들어 힘을 증명한다면 좀비왕을 물리칠 수 있도록 내 힘을 빌려줄게!!`,
-        // 퀘스트 진행 중
-        ing: "이런 아직 레벨을 달성하지 못했구나..",
-        // 성공
-        suc: "레벨을 달성했구나! 힘을 줄게!",
-        // 이미 퀘스트 완료했는데 다시 말 검
-        end: "고마워! 행운을 빌어!",
-      };
-  
-      let messageState = "";
-  
-      if (!npcComProp.arr[1].questStart) {
-        messageState = message.start;
-        npcComProp.arr[1].questStart = true;
-      } else if (
-        npcComProp.arr[1].questStart &&
-        !npcComProp.arr[1].questEnd &&
-        hero.level < level
-      ) {
-        messageState = message.ing;
-      } else if (
-        npcComProp.arr[1].questStart &&
-        !npcComProp.arr[1].questEnd &&
-        hero.level >= level
-      ) {
-        messageState = message.suc;
-        npcComProp.arr[1].questEnd = true;
-        hero.heroUpgrade(70000);
-      } else if (npcComProp.arr[1].questStart && npcComProp.arr[1].questEnd) {
-        messageState = message.end;
-      }
-  
-      let text = "";
-      text += '<figure class="npc_img">';
-      text += '<img src="../../lib/images/npc_profile.png" alt="" />';
-      text += "</figure>";
-      text += "<p>";
-      text += messageState;
-      text += "</p>";
-      const modalInner = document.querySelector(
-        ".quest_modal .inner_box .quest_talk"
-      );
-      modalInner.innerHTML = text;
-    },
-  }; */
