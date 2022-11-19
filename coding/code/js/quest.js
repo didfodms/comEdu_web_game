@@ -161,7 +161,6 @@ const quest1 = {
     else if (npcComProp.arr[0].questSuccess) {
       messageState = message.suc;
       npcComProp.arr[0].questEnd = true;
-      hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
     else if (npcComProp.arr[0].questFail) {
       messageState = message.fail;
@@ -241,7 +240,6 @@ const quest2 = {
     else if (npcComProp.arr[1].questSuccess) {
       messageState = message.suc;
       npcComProp.arr[1].questEnd = true;
-      hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
     else if (npcComProp.arr[1].questFail) {
       messageState = message.fail;
@@ -321,7 +319,6 @@ const quest3 = {
     else if (npcComProp.arr[2].questSuccess) {
       messageState = message.suc;
       npcComProp.arr[0].questEnd = true;
-      hero.heroUpgrade(50000);
     } // 답이 틀렸을 경우
     else if (npcComProp.arr[2].questFail) {
       messageState = message.fail;
