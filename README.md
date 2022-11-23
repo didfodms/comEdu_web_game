@@ -1,12 +1,10 @@
 # 컴교를 구해줘~
----
 > 제주대학교 컴퓨터교육과에 바이러스가 나타났다!
 나쁜 바이러스를 모두 물리치고 컴퓨터교육과를 구해줘~
 HTML, CSS, JavaScript 웹앱 게임!
 
 
 ## 조작키
----
 ```X``` : 공격
 ```C``` : 슬라이드
 ```ENTER``` : NPC 말 걸기
@@ -14,7 +12,6 @@ HTML, CSS, JavaScript 웹앱 게임!
 
 
 ## 게임 방법
----
 1. 몰려오는 바이러스들에게 당근을 던져 데미지를 입히세요!
 ![](https://velog.velcdn.com/images/reyang/post/e2bd5e4c-2580-4577-bc93-948ee0e0965e/image.png)
 
@@ -29,7 +26,6 @@ HTML, CSS, JavaScript 웹앱 게임!
 
 
 ## 컴퓨터교육과 전시회 (2022.11.19)
----
 ![](https://velog.velcdn.com/images/reyang/post/b52a2116-e814-4664-b7f3-b704dc41b8a2/image.png)
 ![](https://velog.velcdn.com/images/reyang/post/183c4061-96ff-443d-b1f2-d4c27f66c106/image.png)
 ![](https://velog.velcdn.com/images/reyang/post/9051cf47-81f8-4189-8c02-ba8d34ed2187/image.png)
